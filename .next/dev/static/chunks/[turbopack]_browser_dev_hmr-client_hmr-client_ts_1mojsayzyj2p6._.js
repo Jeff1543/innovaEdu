@@ -18,7 +18,10 @@ __turbopack_context__.s([
 ]);
 const TURBOPACK_CHUNK_UPDATE_LISTENERS_GLOBAL = 'TURBOPACK_CHUNK_UPDATE_LISTENERS';
 let lastSeenHmrVersion;
-function connect({ addMessageListener, sendMessage, onUpdateError = console.error, chunkUpdateListenersGlobal }) {
+function connect({ addMessageListener, sendMessage, onUpdateError = console.error, chunkUpdateListenersGlobal, initialHmrVersion }) {
+    // Initialize before replaying socket messages or draining queued listeners.
+    // A previously observed socket version takes priority on reconnection.
+    lastSeenHmrVersion ??= initialHmrVersion;
     addMessageListener((msg)=>{
         switch(msg.type){
             case 'turbopack-connected':

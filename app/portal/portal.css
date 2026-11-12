@@ -1,0 +1,22 @@
+.pt-table-wrap { background:#fff; border:2px solid var(--ink); border-radius:24px; overflow-x:auto; }
+.pt-table { width:100%; border-collapse:collapse; min-width:640px; }
+.pt-table th { text-align:left; font-size:12px; letter-spacing:.04em; color:var(--mut); padding:14px 16px; border-bottom:2px solid #eadfca; }
+.pt-table td { padding:14px 16px; border-bottom:1px solid #eadfca; }
+.pt-table tr:last-child td { border-bottom:0; }
+.pt-pill { display:inline-block; padding:3px 12px; border-radius:999px; border:1.5px solid var(--ink); font-size:12px; font-weight:800; }
+.pt-ok { background:var(--m); } .pt-wait { background:var(--y); } .pt-soon { background:var(--s); }
+.pt-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin:28px 0; }
+.pt-stats b { display:block; font:600 34px Fredoka,sans-serif; }
+.pt-stats span { color:var(--mut); font-weight:700; font-size:14px; }
+.pt-up { display:grid; gap:14px; background:#fff; border:2px solid var(--ink); border-radius:24px; padding:24px; max-width:640px; }
+.pt-up label { display:grid; gap:6px; font-weight:800; font-size:14px; }
+.pt-up select, .pt-up textarea { border:2px solid var(--ink); border-radius:14px; padding:11px 14px; background:var(--bg); font:600 15px Nunito,sans-serif; color:var(--ink); }
+.pt-drop { border:2px dashed var(--ink); border-radius:18px; padding:22px; text-align:center; cursor:pointer; background:var(--bg); display:grid; gap:6px; justify-items:center; }
+.pt-drop input { display:none; }
+.pt-docs { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-top:28px; }
+.pt-doc { background:#fff; border:2px solid var(--ink); border-radius:20px; padding:14px; display:grid; gap:10px; }
+.pt-doc div { display:flex; gap:6px; flex-wrap:wrap; }
+.pt-doc img { width:64px; height:64px; object-fit:cover; border-radius:12px; border:2px solid var(--ink); }
+
+/* kartu statistik portal: warna harus menang atas .wr-card (putih) dari beranda.css */
+.wr .wr-card.wr-y { background:var(--y); } .wr .wr-card.wr-m { background:var(--m); } .wr .wr-card.wr-s { background:var(--s); }

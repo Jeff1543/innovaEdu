@@ -1,6 +1,17 @@
-node_modules/
-.next/
-out/
+# dependency & hasil build
+node_modules
+.next
+out
+build
+next-env.d.ts
+*.tsbuildinfo
+
+# RAHASIA: semua file env jangan pernah di-commit (kecuali contohnya)
 .env
 .env.*
 !.env.example
+
+# lain-lain
+.vercel
+.DS_Store
+npm-debug.log*

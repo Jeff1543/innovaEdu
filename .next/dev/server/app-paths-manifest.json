@@ -1,4 +1,15 @@
 {
+  "/admin/absensi/page": "app/admin/absensi/page.js",
+  "/admin/akun/page": "app/admin/akun/page.js",
+  "/admin/jadwal/page": "app/admin/jadwal/page.js",
+  "/admin/laporan/page": "app/admin/laporan/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/pembayaran/page": "app/admin/pembayaran/page.js",
+  "/admin/pendaftaran/page": "app/admin/pendaftaran/page.js",
+  "/admin/pengajar/page": "app/admin/pengajar/page.js",
+  "/admin/siswa/page": "app/admin/siswa/page.js",
+  "/auth/redirect/route": "app/auth/redirect/route.js",
+  "/login/page": "app/login/page.js",
   "/page": "app/page.js",
-  "/pengajar/page": "app/pengajar/page.js"
+  "/portal/page": "app/portal/page.js"
 }

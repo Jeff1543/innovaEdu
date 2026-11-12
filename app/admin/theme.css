@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap");
+
+html:has(.at) body { background:#fff8ec; }
+.at { --primary:#1d2b4f; --primary-dark:#111c38; --background:#fff8ec; --surface:#fff; --text:#1d2b4f; --muted:#5d6785; --border:#eadfca; --ink:#1d2b4f; --y:#ffc83d;
+  font-family:Nunito,system-ui,sans-serif; color:var(--ink); background:var(--background); min-height:100vh; }
+.at h1, .at h2, .at h3 { font-family:Fredoka,Nunito,sans-serif; font-weight:600; color:var(--ink); }
+.at .welcome-section h1 { font-size:34px; }
+
+/* sidebar */
+.at .sidebar { background:#fff; color:var(--ink); border-right:2px solid var(--ink); }
+.at .sidebar h2, .at .sidebar a, .at .sidebar span, .at .sidebar strong, .at .sidebar p { color:var(--ink); }
+.at .sidebar .sidebar-label, .at .sidebar .brand span, .at .sidebar .profile-info span { color:var(--muted); }
+.at .brand-icon { background:var(--y); border:2px solid var(--ink); border-radius:12px; }
+.at .brand-icon svg { color:var(--ink); }
+.at .nav-item { border-radius:999px; font-weight:700; border:2px solid transparent; }
+.at .nav-item:hover { background:#fff1cc; }
+.at .nav-item.active, .at .sidebar .nav-item.active span { background:var(--y); color:var(--ink); font-weight:800; }
+.at .nav-item.active { border-color:var(--ink); }
+.at .nav-item svg { color:var(--ink); }
+.at .sidebar .avatar, .at .admin-avatar { background:var(--y); color:var(--ink); border:2px solid var(--ink); }
+
+/* topbar, kartu, tombol */
+.at .topbar { background:transparent; border-bottom:2px solid var(--border); }
+.at .panel, .at .stat-card, .at .student-table-panel, .at .student-stat { background:#fff; border:2px solid var(--ink); border-radius:24px; box-shadow:none; }
+.at .student-modal { border:2px solid var(--ink); border-radius:28px; }
+.at .primary-button { background:var(--y); color:var(--ink); border:2px solid var(--ink); border-radius:999px; box-shadow:0 3px 0 var(--ink); font-weight:800; font-size:13px; }
+.at .primary-button:hover { background:var(--y); transform:translateY(2px); box-shadow:0 1px 0 var(--ink); }
+.at .status-badge, .at .type-badge { border-radius:999px; font-weight:800; font-size:11px; padding:4px 10px; }
+.at .eyebrow { color:var(--muted); font-weight:800; }
+
+/* penurunan angka di dashboard (kelas ini belum ada di globals.css) */
+.at .change-negative { color:#d64545; display:inline-flex; align-items:center; gap:3px; font-weight:700; font-size:12px; }

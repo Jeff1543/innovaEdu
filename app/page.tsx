@@ -1,482 +1,148 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import { Calculator, Check, FlaskConical, Languages, NotebookPen } from "lucide-react";
 
-import {
-  LayoutDashboard,
-  Users,
-  GraduationCap,
-  BookOpen,
-  CalendarDays,
-  ClipboardCheck,
-  Wallet,
-  ChartNoAxesCombined,
-  Settings,
-  Search,
-  Bell,
-  ChevronDown,
-  Plus,
-  ArrowUpRight,
-  ArrowDownRight,
-  MoreHorizontal,
-  Clock,
-  MapPin,
-  CreditCard,
-  Menu,
-} from "lucide-react";
+import "./beranda.css";
+import { ambilPengaturan } from "./lib/pengaturan";
+import { Navbar, ProgramTabs, Pricing, RegisterForm, StackCards, DayScroll } from "./interactive";
 
-const navigation = [
-  { label: "Dashboard", icon: LayoutDashboard, href: "/", active: true },
-  { label: "Data Siswa", icon: Users, href: "/siswa" },
-  { label: "Data Pengajar", icon: GraduationCap, href: "/pengajar" },
-  { label: "Kelas & Program", icon: BookOpen, href: "/kelas" },
-  { label: "Jadwal Belajar", icon: CalendarDays, href: "/jadwal" },
-  { label: "Absensi", icon: ClipboardCheck, href: "/absensi" },
-  { label: "Pembayaran", icon: Wallet, href: "/pembayaran" },
-  { label: "Laporan", icon: ChartNoAxesCombined, href: "/laporan" },
+export const metadata: Metadata = {
+  title: "InnovaEdu | Bimbingan belajar SD & SMP",
+  description: "Bimbingan belajar untuk siswa SD dan SMP. Kelas kecil, pengajar berpengalaman, dan laporan perkembangan untuk orang tua. Daftar trial gratis.",
+};
+
+const belt = ["Kelas kecil", "Pengajar berpengalaman", "Jadwal fleksibel", "Laporan untuk orang tua", "Privat & kelompok", "SD dan SMP"];
+
+const promises = [
+  { n: "01", t: "Pengajar yang kenal anakmu", d: "Pengajar berpengalaman yang memahami cara belajar tiap siswa, bukan sekadar mengejar materi.", c: ["Berpengalaman", "Sabar & komunikatif"] },
+  { n: "02", t: "Kelas kecil, perhatian nyata", d: "Maksimal enam siswa per kelompok, atau pilih privat satu lawan satu supaya tidak ada yang tertinggal.", c: ["Maks. 6 siswa", "Opsi privat"] },
+  { n: "03", t: "Jadwal yang ramah keluarga", d: "Pilih hari dan jam yang cocok. Absensi dan jadwal tercatat rapi sehingga mudah dipantau.", c: ["Jadwal fleksibel", "Absensi tercatat"] },
+  { n: "04", t: "Orang tua selalu tahu progres", d: "Laporan perkembangan dikirim berkala: kehadiran, materi yang dipelajari, dan catatan pengajar.", c: ["Laporan rutin", "Transparan"] },
 ];
 
-const stats = [
-  {
-    title: "Total Siswa Aktif",
-    value: "128",
-    change: "+12%",
-    note: "dibanding bulan lalu",
-    icon: Users,
-    color: "blue",
-    positive: true,
-  },
-  {
-    title: "Total Pengajar",
-    value: "12",
-    change: "+2",
-    note: "pengajar baru",
-    icon: GraduationCap,
-    color: "purple",
-    positive: true,
-  },
-  {
-    title: "Pertemuan Bulan Ini",
-    value: "186",
-    change: "+8.5%",
-    note: "dibanding bulan lalu",
-    icon: CalendarDays,
-    color: "orange",
-    positive: true,
-  },
-  {
-    title: "Pendapatan Bulan Ini",
-    value: "Rp 18,5 jt",
-    change: "+15.2%",
-    note: "dibanding bulan lalu",
-    icon: Wallet,
-    color: "green",
-    positive: true,
-  },
+const faqs = [
+  ["Jenjang apa saja yang dilayani?", "InnovaEdu melayani siswa SD (kelas 1–6) dan SMP (kelas 7–9) untuk mata pelajaran utama."],
+  ["Apa bedanya kelas privat dan kelompok?", "Privat berarti satu pengajar untuk satu siswa dengan jadwal fleksibel. Kelompok berisi maksimal enam siswa dengan jadwal tetap dan biaya lebih terjangkau."],
+  ["Apakah ada kelas trial?", "Ada. Daftarkan anak lewat formulir di bawah, lalu tim kami akan menghubungi untuk mengatur jadwal trial."],
+  ["Bagaimana cara pembayaran?", "Pembayaran dilakukan per pertemuan atau per bulan, lalu diverifikasi oleh admin kami."],
+  ["Bagaimana saya tahu perkembangan anak?", "Kehadiran dan catatan belajar dicatat setiap pertemuan, dan ringkasannya dibagikan kepada orang tua secara berkala."],
 ];
 
-const schedules = [
-  {
-    time: "08.00 - 09.30",
-    subject: "Matematika",
-    student: "Andi Pratama",
-    teacher: "Bu Rina",
-    type: "Privat",
-    color: "blue",
-  },
-  {
-    time: "10.00 - 11.30",
-    subject: "Bahasa Inggris",
-    student: "Kelas 8A",
-    teacher: "Pak Budi",
-    type: "Kelompok",
-    color: "purple",
-  },
-  {
-    time: "13.00 - 14.30",
-    subject: "IPA",
-    student: "Siti Rahma",
-    teacher: "Bu Dina",
-    type: "Privat",
-    color: "green",
-  },
-  {
-    time: "15.00 - 16.30",
-    subject: "Matematika",
-    student: "Kelas 7B",
-    teacher: "Pak Arif",
-    type: "Kelompok",
-    color: "orange",
-  },
-];
-
-const transactions = [
-  {
-    name: "Andi Pratama",
-    detail: "Matematika - 2 pertemuan",
-    date: "03 Nov 2026",
-    amount: "Rp 200.000",
-    status: "Terverifikasi",
-  },
-  {
-    name: "Siti Rahma",
-    detail: "IPA - 1 pertemuan",
-    date: "03 Nov 2026",
-    amount: "Rp 100.000",
-    status: "Menunggu",
-  },
-  {
-    name: "Budi Santoso",
-    detail: "Bahasa Inggris - 4 pertemuan",
-    date: "02 Nov 2026",
-    amount: "Rp 400.000",
-    status: "Terverifikasi",
-  },
-];
-
-const chartData = [
-  { month: "Mei", value: 42 },
-  { month: "Jun", value: 60 },
-  { month: "Jul", value: 48 },
-  { month: "Agu", value: 75 },
-  { month: "Sep", value: 58 },
-  { month: "Okt", value: 85 },
-  { month: "Nov", value: 70 },
-];
-
-export default function Home() {
+export default async function Beranda() {
+  const cfg = await ambilPengaturan();
+  const tiles = [
+    { t: "Matematika", I: Calculator, c: "wr-c" }, { t: "English", I: Languages, c: "wr-s" },
+    { t: "IPA", I: FlaskConical, c: "wr-m" }, { t: "PR & Ujian", I: NotebookPen, c: "wr-l" },
+  ];
   return (
-    <main className="dashboard-layout">
-      <aside className="sidebar">
-        <div className="brand">
-          <div className="brand-icon">
-            <GraduationCap size={25} />
+    <div className="wr" id="top">
+      <Navbar />
+
+      <main>
+        <section className="wr-w wr-hero">
+          <div>
+            <span className="wr-tag">Pendaftaran dibuka · SD & SMP</span>
+            <h1>Belajar jadi <span className="wr-mark">seru</span>, nilai ikut naik.</h1>
+            <p className="wr-lead">InnovaEdu adalah bimbingan belajar untuk siswa SD dan SMP. Kelas kecil, pengajar sabar, dan laporan perkembangan yang selalu sampai ke orang tua.</p>
+            <div className="wr-row">
+              <a href="#daftar" className="wr-btn">Daftar trial gratis</a>
+              <a href="#program" className="wr-btn wh">Lihat program</a>
+            </div>
+            <div className="wr-trust">
+              {["Pengajar berpengalaman", "Maks. 6 siswa per kelas", "Jadwal fleksibel"].map((t) => <span key={t}><Check size={18} />{t}</span>)}
+            </div>
+          </div>
+          {/* GANTI tile ini dengan foto siswa/kelas */}
+          <div className="wr-collage">
+            {tiles.map(({ t, I, c }) => (
+              <div key={t} className={`wr-tile ${c}`}>{t}<I strokeWidth={1.5} /></div>
+            ))}
+          </div>
+        </section>
+
+        <div className="wr-belt" aria-hidden="true">
+          <div>{[...belt, ...belt].map((b, i) => <span key={i}>✦ {b}</span>)}</div>
+        </div>
+
+        <section id="keunggulan" className="wr-sec wr-w">
+          <div className="wr-head">
+            <span className="wr-tag">Kenapa InnovaEdu</span>
+            <h2>Empat janji, ditepati setiap hari.</h2>
+            <p>Memilih tempat belajar itu keputusan besar. Ini hal-hal yang tidak kami kompromikan.</p>
+          </div>
+          <StackCards items={promises} />
+        </section>
+
+        <section id="program" className="wr-sec wr-w">
+          <div className="wr-head">
+            <span className="wr-tag">Program kami</span>
+            <h2>Satu program untuk tiap kebutuhan.</h2>
+            <p>Pilih mata pelajaran yang ingin diperkuat, lalu lihat detail kelasnya.</p>
+          </div>
+          <ProgramTabs />
+        </section>
+
+        <DayScroll />
+
+        <section id="biaya" className="wr-sec wr-w">
+          <div className="wr-head">
+            <span className="wr-tag">Biaya</span>
+            <h2>Sederhana dan jelas.</h2>
+            <p>Tanpa biaya tersembunyi. Pilih paket sesuai kebutuhan belajar anak.</p>
+          </div>
+          <Pricing />
+        </section>
+
+        <section id="faq" className="wr-sec wr-w wr-faq">
+          <div className="wr-head">
+            <span className="wr-tag">FAQ</span>
+            <h2>Pertanyaan yang sering ditanyakan.</h2>
+            <p>Hal-hal yang biasanya ingin diketahui orang tua sebelum mendaftar.</p>
           </div>
           <div>
-            <h2>InnovaEdu</h2>
-            <span>Learning Management</span>
+            {faqs.map(([q, a]) => (
+              <details key={q}><summary>{q}</summary><p>{a}</p></details>
+            ))}
           </div>
-        </div>
+        </section>
 
-        <div className="sidebar-section">
-          <p className="sidebar-label">MENU UTAMA</p>
-
-          <nav className="navigation">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`nav-item ${item.active ? "active" : ""}`}
-                >
-                  <Icon size={19} strokeWidth={1.8} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-
-        <div className="sidebar-bottom">
-          <Link href="/pengaturan" className="nav-item">
-            <Settings size={19} />
-            <span>Pengaturan</span>
-          </Link>
-
-          <div className="sidebar-profile">
-            <div className="avatar admin-avatar">A</div>
-            <div className="profile-info">
-              <strong>Administrator</strong>
-              <span>Owner</span>
-            </div>
-            <MoreHorizontal size={20} />
-          </div>
-        </div>
-      </aside>
-
-      <section className="main-content">
-        <header className="topbar">
-          <div className="mobile-brand">
-            <Menu size={23} />
-            <strong>InnovaEdu</strong>
-          </div>
-
-          <div className="breadcrumb">
-            <span>Halaman</span>
-            <span>/</span>
-            <strong>Dashboard</strong>
-          </div>
-
-          <div className="topbar-right">
-            <div className="search-box">
-              <Search size={17} />
-              <input placeholder="Cari sesuatu..." />
-              <span>⌘ K</span>
-            </div>
-
-            <button className="icon-button" aria-label="Notifikasi">
-              <Bell size={19} />
-              <span className="notification-dot" />
-            </button>
-
-            <div className="topbar-user">
-              <div className="avatar admin-avatar">A</div>
-              <div className="profile-info">
-                <strong>Administrator</strong>
-                <span>Owner</span>
-              </div>
-              <ChevronDown size={16} />
-            </div>
-          </div>
-        </header>
-
-        <div className="page-container">
-          <section className="welcome-section">
+        <section id="daftar" className="wr-sec wr-w">
+          <div className="wr-reg">
             <div>
-              <p className="eyebrow">SELASA, 03 NOVEMBER 2026</p>
-              <h1>Selamat pagi, Administrator! 👋</h1>
-              <p className="welcome-description">
-                Berikut ringkasan aktivitas bimbingan belajar InnovaEdu hari ini.
-              </p>
+              <span className="wr-tag" style={{ color: "#1d2b4f" }}>Trial gratis</span>
+              <h2>Yuk, kenalan dulu dengan kelas kami.</h2>
+              <p style={{ color: "#c4cde6" }}>Isi formulir, kami hubungi untuk mengatur jadwal trial. Tanpa kewajiban mendaftar.</p>
+              <ol className="wr-steps">
+                <li><div><b>Isi formulir</b><span>Ceritakan kebutuhan belajar anak.</span></div></li>
+                <li><div><b>Kami hubungi</b><span>Admin mengatur jadwal trial lewat WhatsApp.</span></div></li>
+                <li><div><b>Ikut kelas trial</b><span>Kenalan dengan pengajar dan suasana kelas.</span></div></li>
+              </ol>
             </div>
+            <RegisterForm />
+          </div>
+        </section>
+      </main>
 
-            <button className="primary-button">
-              <Plus size={18} />
-              Tambah Siswa
-            </button>
-          </section>
-
-          <section className="stats-grid">
-            {stats.map((stat) => {
-              const Icon = stat.icon;
-
-              return (
-                <article className="stat-card" key={stat.title}>
-                  <div className="stat-top">
-                    <div className={`stat-icon ${stat.color}`}>
-                      <Icon size={21} />
-                    </div>
-                    <button className="more-button" aria-label="Menu">
-                      <MoreHorizontal size={20} />
-                    </button>
-                  </div>
-
-                  <p className="stat-title">{stat.title}</p>
-                  <h2>{stat.value}</h2>
-
-                  <div className="stat-footer">
-                    <span className="change-positive">
-                      <ArrowUpRight size={15} />
-                      {stat.change}
-                    </span>
-                    <span>{stat.note}</span>
-                  </div>
-                </article>
-              );
-            })}
-          </section>
-
-          <section className="middle-grid">
-            <article className="panel revenue-panel">
-              <div className="panel-header">
-                <div>
-                  <h3>Ringkasan Pendapatan</h3>
-                  <p>Perkembangan pendapatan bimbel</p>
-                </div>
-                <button className="select-button">
-                  7 Bulan Terakhir <ChevronDown size={15} />
-                </button>
-              </div>
-
-              <div className="revenue-summary">
-                <h2>Rp 18.500.000</h2>
-                <span className="change-positive">
-                  <ArrowUpRight size={16} /> 15,2%
-                </span>
-                <span className="muted-text">dari bulan sebelumnya</span>
-              </div>
-
-              <div className="chart">
-                <div className="chart-grid">
-                  <span>20 jt</span>
-                  <span>15 jt</span>
-                  <span>10 jt</span>
-                  <span>5 jt</span>
-                  <span>0</span>
-                </div>
-
-                <div className="chart-bars">
-                  {chartData.map((item) => (
-                    <div className="bar-column" key={item.month}>
-                      <div className="bar-track">
-                        <div
-                          className={`bar ${item.month === "Nov" ? "highlight" : ""}`}
-                          style={{ height: `${item.value}%` }}
-                        />
-                      </div>
-                      <span>{item.month}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </article>
-
-            <article className="panel quick-panel">
-              <div className="panel-header">
-                <div>
-                  <h3>Ringkasan Aktivitas</h3>
-                  <p>Aktivitas operasional hari ini</p>
-                </div>
-                <MoreHorizontal size={21} />
-              </div>
-
-              <div className="quick-list">
-                <div className="quick-item">
-                  <div className="quick-icon blue">
-                    <CalendarDays size={20} />
-                  </div>
-                  <div className="quick-info">
-                    <strong>8 Pertemuan</strong>
-                    <span>Terjadwal hari ini</span>
-                  </div>
-                  <ArrowUpRight size={17} />
-                </div>
-
-                <div className="quick-item">
-                  <div className="quick-icon green">
-                    <ClipboardCheck size={20} />
-                  </div>
-                  <div className="quick-info">
-                    <strong>5 Pertemuan</strong>
-                    <span>Sudah terlaksana</span>
-                  </div>
-                  <ArrowUpRight size={17} />
-                </div>
-
-                <div className="quick-item">
-                  <div className="quick-icon orange">
-                    <CreditCard size={20} />
-                  </div>
-                  <div className="quick-info">
-                    <strong>3 Pembayaran</strong>
-                    <span>Menunggu verifikasi</span>
-                  </div>
-                  <ArrowUpRight size={17} />
-                </div>
-              </div>
-
-              <div className="quick-note">
-                <Clock size={16} />
-                Data aktivitas ditampilkan sebagai contoh.
-              </div>
-            </article>
-          </section>
-
-          <section className="bottom-grid">
-            <article className="panel schedule-panel">
-              <div className="panel-header">
-                <div>
-                  <h3>Jadwal Pembelajaran</h3>
-                  <p>Agenda pembelajaran hari ini</p>
-                </div>
-                <a href="#" className="text-link">
-                  Lihat semua
-                </a>
-              </div>
-
-              <div className="table-wrapper">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>WAKTU</th>
-                      <th>MATA PELAJARAN</th>
-                      <th>SISWA / KELAS</th>
-                      <th>PENGAJAR</th>
-                      <th>TIPE</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {schedules.map((schedule) => (
-                      <tr key={schedule.time}>
-                        <td>
-                          <div className="time-cell">
-                            <Clock size={14} />
-                            {schedule.time}
-                          </div>
-                        </td>
-                        <td>
-                          <strong>{schedule.subject}</strong>
-                        </td>
-                        <td>{schedule.student}</td>
-                        <td>{schedule.teacher}</td>
-                        <td>
-                          <span className={`type-badge ${schedule.color}`}>
-                            {schedule.type}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </article>
-          </section>
-
-          <section className="bottom-grid">
-            <article className="panel transaction-panel">
-              <div className="panel-header">
-                <div>
-                  <h3>Pembayaran Terbaru</h3>
-                  <p>Riwayat pembayaran siswa</p>
-                </div>
-                <a href="#" className="text-link">
-                  Lihat semua
-                </a>
-              </div>
-
-              <div className="table-wrapper">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>NAMA SISWA</th>
-                      <th>KETERANGAN</th>
-                      <th>TANGGAL</th>
-                      <th>JUMLAH</th>
-                      <th>STATUS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {transactions.map((transaction) => (
-                      <tr key={transaction.name}>
-                        <td><strong>{transaction.name}</strong></td>
-                        <td>{transaction.detail}</td>
-                        <td>{transaction.date}</td>
-                        <td><strong>{transaction.amount}</strong></td>
-                        <td>
-                          <span
-                            className={`status-badge ${
-                              transaction.status === "Terverifikasi"
-                                ? "verified"
-                                : "pending"
-                            }`}
-                          >
-                            {transaction.status}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </article>
-          </section>
-
-          <footer className="footer">
-            <span>© 2026 InnovaEdu. All rights reserved.</span>
-            <span>Learning Management System</span>
-          </footer>
+      <footer className="wr-w">
+        <div className="wr-foot">
+          <div>
+            <h3>InnovaEdu</h3>
+            <p>Bimbingan belajar untuk siswa SD dan SMP. Kelas kecil, pengajar sabar, hasil terasa.</p>
+          </div>
+          <div>
+            <h3>Jelajahi</h3>
+            <a href="#keunggulan">Keunggulan</a><a href="#program">Program</a><a href="#biaya">Biaya</a><a href="#faq">FAQ</a>
+          </div>
+          <div>
+            <h3>Hubungi kami</h3>
+            <p>{cfg.alamat}</p>
+            <p>{cfg.jam}</p>
+            <a href={`https://wa.me/${cfg.whatsapp.replace(/\D/g, "").replace(/^0/, "62")}`}>{cfg.whatsapp}</a>
+            <a href={`mailto:${cfg.email}`}>{cfg.email}</a>
+            <a href="/login">Masuk</a>
+          </div>
         </div>
-      </section>
-    </main>
+        <div className="wr-copy"><span>© 2026 InnovaEdu. Semua hak dilindungi.</span><span>Dibuat untuk pelajar yang penasaran</span></div>
+      </footer>
+    </div>
   );
 }
